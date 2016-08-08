@@ -8,10 +8,15 @@ class WP_Slack_Server_Command_Slack extends WP_Slack_Server_Command {
 		parent::__construct( array(
 			'command_name'  => 'slack',
 			'command_token' => 'PKxB1PfoW2YCGPDhzXim2NR2',
-			'use_callback' => false
 		) );
 	}
 
+	/**
+	 * Generic Handler - Reroutes commands to the actual command.
+	 * @param WP_Slack_Server_Message_Incoming $message
+	 *
+	 * @return bool|mixed|null|void|WP_Error|WP_Slack_Server_Message_Outgoing
+	 */
 	public function handle_message( WP_Slack_Server_Message_Incoming $message ) {
 
 		//We are using a single slack command to route different message.

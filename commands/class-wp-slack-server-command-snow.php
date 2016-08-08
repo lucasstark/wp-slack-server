@@ -6,14 +6,13 @@ class WP_Slack_Server_Command_Snow extends WP_Slack_Server_Command {
 
 	public function __construct() {
 		parent::__construct( array(
-			'command_name'         => 'snow',
-			'command_token'        => 'PKxB1PfoW2YCGPDhzXim2NR2',
-			'use_callback'         => true,
-			'actions' => array(
+			'command_name'  => 'snow',
+			'command_token' => 'PKxB1PfoW2YCGPDhzXim2NR2',
+			'actions'       => array(
 				array(
-					'function' => array( $this, 'handle_ticket_list' ),
-					'callback_function' => array($this, 'handle_ticket_list_callback'),
-					'commands' => array(
+					'function'          => array( $this, 'handle_ticket_list' ),
+					'callback_function' => array( $this, 'handle_ticket_list_callback' ),
+					'commands'          => array(
 						'/tickets/',
 						'/ticket summary/',
 						'/ticket list/',
@@ -22,9 +21,9 @@ class WP_Slack_Server_Command_Snow extends WP_Slack_Server_Command {
 					)
 				),
 				array(
-					'function' => array( $this, 'handle_ticket_details' ),
-					'callback_function' => array($this, 'handle_ticket_details_callback'),
-					'commands' => array(
+					'function'          => array( $this, 'handle_ticket_details' ),
+					'callback_function' => array( $this, 'handle_ticket_details_callback' ),
+					'commands'          => array(
 						'/ticket details (REQ\d+)/',
 						'/(REQ\d+) details/'
 					)
@@ -43,13 +42,14 @@ class WP_Slack_Server_Command_Snow extends WP_Slack_Server_Command {
 	}
 
 
-	public function handle_ticket_details(WP_Slack_Server_Message_Incoming $message, $args){
-		return new WP_Slack_Server_Message_Outgoing('Looking up ticket details for: ' . $args[1], false);
+	public function handle_ticket_details( WP_Slack_Server_Message_Incoming $message, $args ) {
+		return new WP_Slack_Server_Message_Outgoing( 'Looking up ticket details for: ' . $args[1], false );
 	}
 
 
 	/**
 	 * Execute a delayed response back to the response_url on the slack message.
+	 *
 	 * @param WP_Slack_Server_Message_Incoming $slack_message
 	 *
 	 * @return bool
@@ -88,26 +88,28 @@ class WP_Slack_Server_Command_Snow extends WP_Slack_Server_Command {
 		);
 
 		$result = wp_remote_post( $slack_message->response_url, $args );
+
 		return true;
 	}
 
 
 	/**
 	 * Execute a delayed response back to the response_url on the slack message.
+	 *
 	 * @param WP_Slack_Server_Message_Incoming $slack_message
 	 *
 	 * @return bool
 	 */
 	public function handle_ticket_details_callback( WP_Slack_Server_Message_Incoming $slack_message, $args ) {
 		$message = new WP_Slack_Server_Message_Outgoing( 'Ticket Details for ' . $args[1], false );
-		$args = array(
+		$args    = array(
 			'headers' => array( 'Content-Type' => 'application/json' ),
 			'body'    => json_encode( $message )
 		);
-		$result = wp_remote_post( $slack_message->response_url, $args );
+		$result  = wp_remote_post( $slack_message->response_url, $args );
+
 		return true;
 	}
-
 
 
 }
