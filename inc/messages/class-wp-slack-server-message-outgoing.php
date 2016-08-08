@@ -19,6 +19,4 @@ class WP_Slack_Server_Message_Outgoing {
 
 		$this->attachments[] = $attachment;
 	}
-
-
 }
