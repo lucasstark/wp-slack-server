@@ -1,0 +1,4 @@
+*** WP Slack Server Changelog ***
+
+2016.08.09 - version 1.0.0
+    * Initial Release

@@ -3,13 +3,14 @@
 
 /**
  * Plugin Name: WP Slack Server
- * Description: Endpoints for the WordPress REST API as a backend for Slack Slash Commands
+ * Description: Endpoints for the WordPress REST API as a backend for Slack Slash Commands.  Requires WP Rest API
  * Author: Lucas Stark
- * Author URI: http://elementstark.com
- * Version: 0.1
+ * Author URI: http://lucasstark.com
+ * Version: 1.0.0
  * Plugin URI:
- * License: GPL2+
+ * License: GPLv3
  */
+
 class WP_Slack_Server {
 	/**
 	 * @var WP_Slack_Server
