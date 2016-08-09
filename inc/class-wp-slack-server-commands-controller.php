@@ -20,7 +20,10 @@ class WP_Slack_Server_Commands_Controller {
 			) );
 
 			register_rest_route( 'slack/v1', '/slash-callback', array(
-				'methods'  => 'POST',
+				'methods'  => array(
+					'POST',
+					'GET'
+				),
 				'callback' => array( $this, 'handle_callback' ),
 			) );
 

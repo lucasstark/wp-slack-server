@@ -1,7 +1,7 @@
 <?php
 
 
-abstract class WP_Slack_Server_Command {
+class WP_Slack_Server_Command {
 
 	public $command_name;
 	public $command_token;
@@ -12,10 +12,10 @@ abstract class WP_Slack_Server_Command {
 
 	public function __construct( $settings ) {
 
-		$this->command_name         = '/' . $settings['command_name'];
-		$this->command_token        = $settings['command_token'];
-		$this->use_callback         = isset( $settings['use_callback'] ) ? (bool) $settings['use_callback'] : false;
-		$this->actions = isset( $settings['actions'] ) ? $settings['actions'] : false;
+		$this->command_name  = '/' . $settings['command_name'];
+		$this->command_token = $settings['command_token'];
+		$this->use_callback  = isset( $settings['use_callback'] ) ? (bool) $settings['use_callback'] : false;
+		$this->actions       = isset( $settings['actions'] ) ? $settings['actions'] : false;
 	}
 
 	public function maybe_handle_message( WP_Slack_Server_Message_Incoming $message ) {
@@ -27,7 +27,13 @@ abstract class WP_Slack_Server_Command {
 				foreach ( $this->actions as $action ) {
 					foreach ( $action['commands'] as $command ) {
 						if ( preg_match( $command, $message->text, $matches ) ) {
-							$response = call_user_func( $action['function'], $message, $matches );
+							if ( isset( $action['function'] ) && is_callable( $action['function'] ) ) {
+								$response = call_user_func( $action['function'], $message, $matches );
+							}
+
+							if ( isset( $action['filter'] ) ) {
+								$response = apply_filters($action['filter'], $response, $message, $matches );
+							}
 						}
 					}
 				}
@@ -39,7 +45,7 @@ abstract class WP_Slack_Server_Command {
 			}
 
 			//If the matched action requires a delayed response, fire the socket back to ourselves to trigger async processing of the callback.
-			if ( ! empty( $action ) && isset( $action['callback_function'] ) ) {
+			if ( ! empty( $action ) && ( isset( $action['callback_function'] ) || isset( $action['callback_filter'] ) ) ) {
 				//Post back to ourselves, triggering the callback function.
 				//Using a socket so that it's a non-blocking request.
 				$this->curl_post_async( get_rest_url( 1, '/slack/v1/slash-callback/' ), array(
@@ -70,7 +76,14 @@ abstract class WP_Slack_Server_Command {
 					foreach ( $action['commands'] as $command ) {
 						if ( preg_match( $command, $message->text, $matches ) ) {
 							$handled = true;
-							call_user_func( $action['callback_function'], $message, $matches );
+							if ( isset( $action['callback_function'] ) && is_callable( $action['callback_function'] ) ) {
+								call_user_func( $action['callback_function'], $message, $matches );
+							}
+
+							if ( isset( $action['callback_filter'] ) ) {
+								do_action( $action['callback_filter'], $message, $matches );
+							}
+
 						}
 					}
 				}

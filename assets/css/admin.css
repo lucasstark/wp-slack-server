@@ -1,0 +1,72 @@
+#slack_setting_metabox .inside {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.wp-slack-server-control-table {
+    margin-top:0;
+}
+
+.wp-slack-server-control-table td {
+    padding: 0 !important;
+    vertical-align: top;
+    background: #fff;
+    text-align: left;
+    font-size: 14px;
+    line-height: 1.4em;
+    border-style: solid;
+    border-color: #EEEEEE;
+    border-width: 0 1px 1px 1px;
+}
+
+.wp-slack-server-control {
+    margin: 0;
+    padding: 15px 12px;
+    position: relative;
+    clear: left;
+}
+
+.wp-slack-server-control input[type="text"], .wp-slack-server-control input[type="password"], .wp-slack-server-control input[type="number"], .wp-slack-server-control input[type="search"], .wp-slack-server-control input[type="email"], .wp-slack-server-control input[type="url"], .wp-slack-server-control textarea, .wp-slack-server-control select {
+    width: 100%;
+    padding: 3px 5px;
+    resize: none;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.wp-slack-server-control .wp-slack-server-control-label {
+    vertical-align: top;
+    margin: 0 0 10px;
+}
+
+.wp-slack-server-control .wp-slack-server-control-label label {
+    display: block;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 1.4em;
+    margin: 0 0 3px;
+}
+
+.wp-slack-server-control .wp-slack-server-control-label p {
+    color: #777777;
+    display: block;
+    font-size: 12px;
+    line-height: 1.4em;
+    font-style: normal;
+    margin: 3px 0 0 !important;
+    padding: 0 !important;
+}
+
+.wp-slack-server-control-row-remove {
+    background: #F9F9F9;
+    border-left-color: #DFDFDF;
+    width: 26px;
+    text-align: center !important;
+    vertical-align: middle !important;
+    position: relative;
+}
+
