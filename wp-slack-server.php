@@ -1,15 +1,15 @@
 <?php
-
-
 /**
  * Plugin Name: WP Slack Server
  * Description: Endpoints for the WordPress REST API as a backend for Slack Slash Commands.  Requires WP Rest API
  * Author: Lucas Stark
  * Author URI: http://lucasstark.com
- * Version: 1.0.0
+ * Version: 1.1.0
  * Plugin URI:
  * License: GPLv3
  */
+
+
 class WP_Slack_Server {
 	/**
 	 * @var WP_Slack_Server
@@ -61,7 +61,7 @@ class WP_Slack_Server {
 		$this->url = untrailingslashit( plugin_dir_url( __FILE__ ) );
 
 		require $this->dir . '/inc/class-wp-slack-server-commands-router.php';
-		require $this->dir . '/inc/class-wp-slack-server-commands-controller.php';
+		require $this->dir . '/inc/class-wp-slack-server-slash-endpoint-controller.php';
 		require $this->dir . '/inc/messages/class-wp-slack-server-message-incoming.php';
 		require $this->dir . '/inc/messages/class-wp-slack-server-message-attachment.php';
 		require $this->dir . '/inc/messages/class-wp-slack-server-message-outgoing.php';
@@ -70,7 +70,7 @@ class WP_Slack_Server {
 
 		//Require Built In Commands
 		require $this->dir . '/inc/class-wp-slack-server-command-builder.php';
-		require $this->dir . '/inc/class-wp-slack-server-command.php';
+		require $this->dir . '/inc/models/class-wp-slack-server-command.php';
 		foreach ( glob( $this->dir . "/commands/*.php" ) as $filename ) {
 			include $filename;
 		}
@@ -85,7 +85,7 @@ class WP_Slack_Server {
 		$this->command_builder = new WP_Slack_Server_Command_Builder();
 
 		//Boot up some controllers.
-		WP_Slack_Server_Commands_Controller::register();
+		WP_Slack_Server_Slash_Endpoint_Controller::register();
 		WP_Slack_Server_Post_Type_Command::register();
 	}
 
@@ -139,14 +139,14 @@ function slack_server() {
 WP_Slack_Server::register();
 
 
-/* Example Filters for Slack Commands built using the interface in the dashboard.
+
 add_filter('respond_with_joke', 'my_respond_with_a_joke', 10, 3);
 function my_respond_with_a_joke($response, $message, $args){
-	$response = 'Here is your joke';
+	$response = new WP_Slack_Server_Message_Outgoing('Here is your joke');
 	return $response;
 }
 
-
+/* Example Filters for Slack Commands built using the interface in the dashboard.
 add_action('respond_with_joke_delayed', 'my_respond_with_a_joke_delayed', 10, 2);
 function my_respond_with_a_joke_delayed($message, $matches){
 	$fp = fopen( untrailingslashit( plugin_dir_path(__FILE__) ) .  '/jokes.txt', 'a');

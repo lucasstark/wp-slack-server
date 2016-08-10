@@ -78,8 +78,8 @@ $choices = array(
 							<td>
 								<div class="wp-slack-server-control">
 									<div class="wp-slack-server-control-label">
-										<label><?php _e( 'Response Function', 'slack' ); ?></label>
-										<p class="description"><?php _e( 'The name of the response function to trigger.  This is your custom function which will return messages for Slack', 'slack' ); ?></p>
+										<label><?php _e( 'Response Filter Name', 'slack' ); ?></label>
+										<p class="description"><?php _e( 'The name of the filter to call.  This is your custom function which will return messages for Slack', 'slack' ); ?></p>
 									</div>
 									<div class="wp-slack-server-input">
 										<input type="text" class="widefat"
@@ -124,8 +124,8 @@ $choices = array(
 						<td>
 							<div class="wp-slack-server-control">
 								<div class="wp-slack-server-control-label">
-									<label><?php _e( 'Response Function', 'slack' ); ?></label>
-									<p class="description"><?php _e( 'The name of the response function to trigger.  This is your custom function which will return messages for Slack', 'slack' ); ?></p>
+									<label><?php _e( 'Response Filter Name', 'slack' ); ?></label>
+									<p class="description"><?php _e( 'The name of the filter to call.  This is your custom function which will return messages for Slack', 'slack' ); ?></p>
 								</div>
 								<div class="wp-slack-server-input">
 									<input type="text" class="widefat"
@@ -168,8 +168,8 @@ $choices = array(
 					<td>
 						<div class="wp-slack-server-control">
 							<div class="wp-slack-server-control-label">
-								<label><?php _e( 'Response Function', 'slack' ); ?></label>
-								<p class="description"><?php _e( 'The name of the response function to trigger.  This is your custom function which will return messages for Slack', 'slack' ); ?></p>
+								<label><?php _e( 'Response Filter Name', 'slack' ); ?></label>
+								<p class="description"><?php _e( 'The name of the filter to call.  This is your custom function which will return messages for Slack', 'slack' ); ?></p>
 							</div>
 							<div class="wp-slack-server-input">
 								<input type="text" class="widefat"

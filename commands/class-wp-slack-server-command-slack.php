@@ -1,13 +1,17 @@
 <?php
 
-
+/*
+ * This command will re-route anything with the slash command /slack to it's own command.
+ * Developed to help with teams using the free version of slack who have reached their integration limit.
+ * Just type /slack <command-name> <command-argument> and this command will re-route from /slack to /<command-name>
+ */
 class WP_Slack_Server_Command_Slack extends WP_Slack_Server_Command {
 
 
 	public function __construct() {
 		parent::__construct( array(
 			'command_name'  => 'slack',
-			'command_token' => 'PKxB1PfoW2YCGPDhzXim2NR2',
+			'command_token' => WP_SLACK_SERVER_TOKEN,
 		) );
 	}
 

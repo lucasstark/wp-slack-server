@@ -1,12 +1,12 @@
 <?php
 
 
-class WP_Slack_Server_Commands_Controller {
+class WP_Slack_Server_Slash_Endpoint_Controller {
 	private static $instance;
 
 	public static function register() {
 		if ( self::$instance == null ) {
-			self::$instance = new WP_Slack_Server_Commands_Controller();
+			self::$instance = new WP_Slack_Server_Slash_Endpoint_Controller();
 		}
 	}
 

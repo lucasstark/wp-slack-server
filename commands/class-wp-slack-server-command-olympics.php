@@ -8,7 +8,7 @@ class WP_Slack_Server_Command_Olympics extends WP_Slack_Server_Command {
 		//The actions => commands are regular expressions.  Use any valid regular expression to match to the incomming message text.
 		parent::__construct( array(
 				'command_name'  => 'olympics',
-				'command_token' => 'PKxB1PfoW2YCGPDhzXim2NR2',
+				'command_token' => WP_SLACK_SERVER_TOKEN,
 				'actions'       => array(
 					array(
 						'function' => array( $this, 'handle_show_medals' ),
