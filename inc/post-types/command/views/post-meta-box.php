@@ -61,7 +61,7 @@ $choices = array(
 				<div class="wp-slack-server-control-label">
 					<label><?php _e( 'Actions', 'slack' ); ?></label>
 					<p class="description">
-						<?php _e('Define a response filter function to call and assoicated strings / regular expressions to respond to.'); ?>
+						<?php _e('Define a response filter function to call and the phrases which will trigger it.'); ?>
 					</p>
 				</div>
 			</div>
