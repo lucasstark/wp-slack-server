@@ -38,7 +38,6 @@ $choices = array(
 			</div>
 		</td>
 	</tr>
-
 	<tr valign="top">
 		<td>
 			<div class="wp-slack-server-control">
@@ -56,80 +55,53 @@ $choices = array(
 			</div>
 		</td>
 	</tr>
-
 	<tr valign="top">
 		<td>
 			<div class="wp-slack-server-control">
 				<div class="wp-slack-server-control-label">
 					<label><?php _e( 'Actions', 'slack' ); ?></label>
+					<p class="description">
+						<?php _e('Define a response filter function to call and assoicated strings / regular expressions to respond to.'); ?>
+					</p>
 				</div>
 			</div>
 		</td>
 	</tr>
 	<tr valign="top">
 		<td>
-			<table id="repeatable-fieldset-one" width="100%">
-				<tbody>
-				<?php
-				if ( ! empty( $options['actions'] ) ) :
-					foreach ( $options['actions'] as $index => $action ) :
-						?>
-						<tr>
-							<td>
-								<div class="wp-slack-server-control">
-									<div class="wp-slack-server-control-label">
-										<label><?php _e( 'Response Filter Name', 'slack' ); ?></label>
-										<p class="description"><?php _e( 'The name of the filter to call.  This is your custom function which will return messages for Slack', 'slack' ); ?></p>
-									</div>
-									<div class="wp-slack-server-input">
-										<input type="text" class="widefat"
-										       name="slack_command_option[actions][response_function][]"
-										       value="<?php echo esc_attr( $action['response_function']); ?>"/>
-									</div>
-								</div>
-								<div class="wp-slack-server-control">
-									<div class="wp-slack-server-control-label">
-										<label><?php _e( 'Delayed Response', 'slack' ); ?></label>
-										<p class="description"><?php _e( 'Choose yes if your response function will take longer than 3000 Milliseconds to complete.', 'slack' ); ?></p>
-									</div>
-									<div class="wp-slack-server-input">
-										<select name="slack_command_option[actions][delayed_reponse][]">
-											<?php foreach ( $choices as $value => $label ) : ?>
-												<option <?php selected( $value == $action['delayed_response'] ); ?>
-													value="<?php echo $value; ?>"><?php echo $label; ?></option>
-											<?php endforeach; ?>
-										</select>
-									</div>
-								</div>
-								<div class="wp-slack-server-control">
-									<div class="wp-slack-server-control-label">
-										<label><?php _e( 'Utterances', 'slack' ); ?></label>
-										<p class="description"><?php _e( 'Enter the utterances that this command will respond to.  You can use PHP Regular expression syntax.    Example /show me jokes about (.*)/', 'slack' ); ?>
-											<br/><br/><?php _e( 'Enter one per line.', 'slack' ); ?></p>
-									</div>
-									<div class="wp-slack-server-input">
-										<textarea name="slack_command_option[actions][utterances][]" class="widefat"
-										          rows="8"><?php echo esc_textarea( $action['utterances'] ); ?></textarea>
-									</div>
-								</div>
-							</td>
 
-							<td class="wp-slack-server-control-row-remove"><a class="button remove-row"
-							                                                  href="#">Remove</a>
-							</td>
-						</tr>
-					<?php endforeach; ?>
-				<?php else : ?>
-					<tr>
-						<td>
+		<div class="wp-slack-server-control-list">
+
+			<div class="wp-slack-server-control-wrap">
+				<div class="wp-slack-server-control-header">
+					<ul>
+						<li class="control-order"><strong>Order</strong></li>
+						<li class="control-label"><strong>Response Filter Name</strong></li>
+					</ul>
+				</div>
+			</div>
+
+			<?php
+			if ( ! empty( $options['actions'] ) ) : ?>
+				<?php foreach ( $options['actions'] as $index => $action ) : ?>
+					<div class="wp-slack-server-control-wrap">
+						<div class="wp-slack-server-control-header">
+							<ul>
+								<li class="control-order"><?php echo $index + 1; ?></li>
+								<li class="control-label"><a
+										href="#"><?php echo esc_html( $action['response_function'] ); ?></a></li>
+							</ul>
+						</div>
+						<div class="wp-slack-server-control-inputs">
 							<div class="wp-slack-server-control">
 								<div class="wp-slack-server-control-label">
 									<label><?php _e( 'Response Filter Name', 'slack' ); ?></label>
 									<p class="description"><?php _e( 'The name of the filter to call.  This is your custom function which will return messages for Slack', 'slack' ); ?></p>
 								</div>
 								<div class="wp-slack-server-input">
-									<input type="text" class="widefat"
-									       name="slack_command_option[actions][response_function][]"/>
+									<input type="text" class="widefat response-function"
+									       name="slack_command_option[actions][response_function][]"
+									       value="<?php echo esc_attr( $action['response_function'] ); ?>"/>
 								</div>
 							</div>
 							<div class="wp-slack-server-control">
@@ -140,7 +112,8 @@ $choices = array(
 								<div class="wp-slack-server-input">
 									<select name="slack_command_option[actions][delayed_reponse][]">
 										<?php foreach ( $choices as $value => $label ) : ?>
-											<option value="<?php echo $value; ?>"><?php echo $label; ?></option>
+											<option <?php selected( $value == $action['delayed_response'] ); ?>
+												value="<?php echo $value; ?>"><?php echo $label; ?></option>
 										<?php endforeach; ?>
 									</select>
 								</div>
@@ -152,78 +125,122 @@ $choices = array(
 										<br/><br/><?php _e( 'Enter one per line.', 'slack' ); ?></p>
 								</div>
 								<div class="wp-slack-server-input">
-									<textarea name="slack_command_option[actions][utterances][]" class="widefat"
-									          rows="8"></textarea>
+										<textarea name="slack_command_option[actions][utterances][]" class="widefat"
+										          rows="8"><?php echo esc_textarea( $action['utterances'] ); ?></textarea>
 								</div>
 							</div>
-						</td>
-
-						<td class="wp-slack-server-control-row-remove"><a class="button remove-row" href="#">Remove</a>
-						</td>
-					</tr>
-				<?php endif; ?>
-
-				<!-- empty hidden one for jQuery -->
-				<tr class="empty-row screen-reader-text">
-					<td>
-						<div class="wp-slack-server-control">
-							<div class="wp-slack-server-control-label">
-								<label><?php _e( 'Response Filter Name', 'slack' ); ?></label>
-								<p class="description"><?php _e( 'The name of the filter to call.  This is your custom function which will return messages for Slack', 'slack' ); ?></p>
-							</div>
-							<div class="wp-slack-server-input">
-								<input type="text" class="widefat"
-								       name="slack_command_option[actions][response_function][]"/>
-							</div>
 						</div>
-						<div class="wp-slack-server-control">
-							<div class="wp-slack-server-control-label">
-								<label><?php _e( 'Delayed Response', 'slack' ); ?></label>
-								<p class="description"><?php _e( 'Choose yes if your response function will take longer than 3000 Milliseconds to complete.', 'slack' ); ?></p>
-							</div>
-							<div class="wp-slack-server-input">
-								<select name="slack_command_option[actions][delayed_reponse][]">
-									<?php foreach ( $choices as $value => $label ) : ?>
-										<option value="<?php echo $value; ?>"><?php echo $label; ?></option>
-									<?php endforeach; ?>
-								</select>
-							</div>
+					</div>
+				<?php endforeach; ?>
+			<?php endif; ?>
+
+			<div class="wp-slack-server-control-wrap empty-wrap">
+				<div class="wp-slack-server-control-header">
+					<ul>
+						<li class="control-order">1</li>
+						<li class="control-label"><a href="#"></a></li>
+					</ul>
+				</div>
+				<div class="wp-slack-server-control-inputs">
+					<div class="wp-slack-server-control">
+						<div class="wp-slack-server-control-label">
+							<label><?php _e( 'Response Filter Name', 'slack' ); ?></label>
+							<p class="description"><?php _e( 'The name of the filter to call.  This is your custom function which will return messages for Slack', 'slack' ); ?></p>
 						</div>
-						<div class="wp-slack-server-control">
-							<div class="wp-slack-server-control-label">
-								<label><?php _e( 'Utterances', 'slack' ); ?></label>
-								<p class="description"><?php _e( 'Enter the utterances that this command will respond to.  You can use PHP Regular expression syntax.    Example /show me jokes about (.*)/', 'slack' ); ?>
-									<br/><br/><?php _e( 'Enter one per line.', 'slack' ); ?></p>
-							</div>
-							<div class="wp-slack-server-input">
+						<div class="wp-slack-server-input">
+							<input type="text" class="widefat response-function"
+							       name="slack_command_option[actions][response_function][]"/>
+						</div>
+					</div>
+					<div class="wp-slack-server-control">
+						<div class="wp-slack-server-control-label">
+							<label><?php _e( 'Delayed Response', 'slack' ); ?></label>
+							<p class="description"><?php _e( 'Choose yes if your response function will take longer than 3000 Milliseconds to complete.', 'slack' ); ?></p>
+						</div>
+						<div class="wp-slack-server-input">
+							<select name="slack_command_option[actions][delayed_reponse][]">
+								<?php foreach ( $choices as $value => $label ) : ?>
+									<option value="<?php echo $value; ?>"><?php echo $label; ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+					</div>
+					<div class="wp-slack-server-control">
+						<div class="wp-slack-server-control-label">
+							<label><?php _e( 'Utterances', 'slack' ); ?></label>
+							<p class="description"><?php _e( 'Enter the utterances that this command will respond to.  You can use PHP Regular expression syntax.    Example /show me jokes about (.*)/', 'slack' ); ?>
+								<br/><br/><?php _e( 'Enter one per line.', 'slack' ); ?></p>
+						</div>
+						<div class="wp-slack-server-input">
 									<textarea name="slack_command_option[actions][utterances][]" class="widefat"
 									          rows="8"></textarea>
-							</div>
 						</div>
-					</td>
+					</div>
+				</div>
+			</div>
 
-					<td class="wp-slack-server-control-row-remove"><a class="button remove-row" href="#">Remove</a>
-					</td>
-				</tr>
-				</tbody>
-			</table>
-			<p><a id="add-row" class="button" href="#">Add another</a></p>
+			<ul class="wp-slack-server-control-tfoot">
+				<li>
+					<a href="#" class="button button-primary button-large add-action">+ Add Action</a>
+				</li>
+			</ul>
+
+		</div>
+
 		</td>
 	</tr>
 	</tbody>
 </table>
 <script type="text/javascript">
 	jQuery(document).ready(function ($) {
-		$('#add-row').on('click', function () {
-			var row = $('.empty-row.screen-reader-text').clone(true);
-			row.removeClass('empty-row screen-reader-text');
-			row.insertBefore('#repeatable-fieldset-one tbody>tr:last');
-			return false;
-		});
-
 		$('.remove-row').on('click', function () {
 			$(this).parents('tr').remove();
 			return false;
 		});
 	});
+</script>
+
+
+<script type="text/javascript">
+	(function ($) {
+
+		$('.wp-slack-server-control-list').on('click', '.control-label', function (e) {
+			e.preventDefault();
+
+			var $this = $(this);
+			var container = $this.closest('.wp-slack-server-control-wrap');
+			var inputs = container.find('.wp-slack-server-control-inputs');
+
+			if (container.hasClass('open')) {
+				inputs.slideUp(function () {
+					container.removeClass('open');
+				});
+
+			} else {
+				inputs.slideDown();
+				container.addClass('open');
+			}
+
+		}).on('keyup', '.response-function', function(){
+				var container = $(this).closest('.wp-slack-server-control-wrap');
+			    container.find('.wp-slack-server-control-header .control-label a').text($(this).val());
+		});
+
+		$('.add-action').on('click', function (e) {
+			e.preventDefault();
+			var count = $('.wp-slack-server-control-wrap').length - 1;
+
+			var row = $('.empty-wrap.wp-slack-server-control-wrap').clone(true);
+			var inputs = row.find('.wp-slack-server-control-inputs');
+			row.find('.wp-slack-server-control-header .control-order').html('<strong>' + count + '</strong>');
+			row.insertAfter('.wp-slack-server-control-list > div:last');
+			row.removeClass('empty-wrap');
+
+			inputs.slideDown();
+			row.addClass('open');
+			return false;
+		});
+
+	})(jQuery);
+
 </script>
